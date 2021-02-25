@@ -9,7 +9,11 @@ const databaseName = 'todoDB';
 const dbURL = `mongodb://localhost:27017/${databaseName}`;
 
 mongoose
-	.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+	.connect(dbURL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false,
+	})
 	.then(console.log('Mongoose Connected\n'))
 	.catch((err) => console.error(err));
 
@@ -45,7 +49,7 @@ const createItem = (data) => {
 		if (err) {
 			console.error(err);
 		} else {
-			console.log('Item Saved in today: ', doc);
+			console.log('Item Saved: ', doc);
 		}
 	});
 };
@@ -56,7 +60,7 @@ const removeItemById = (itemId) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Item is Removed Successfully');
+			console.log('Item Removed Successfully ', itemId);
 		}
 	});
 };
