@@ -27,72 +27,7 @@ app.use(express.static('public'));
 // Renderer
 app.set('view engine', 'ejs');
 
-/////////////////////////////////////////////////////////////////////////
-
-// Item Schema
-const itemSchema = mongoose.Schema({
-	name: {
-		type: String,
-		required: [true, 'Empty item is pushed'],
-	},
-});
-const Item = mongoose.model('Item', itemSchema);
-
-/////////////////////////////////////////////////////////////////////////
-
-// Create Item
-const createItem = (data) => {
-	const item = new Item({
-		name: data,
-	});
-	item.save((err, doc) => {
-		if (err) {
-			console.error(err);
-		} else {
-			console.log('Item Saved: ', doc);
-		}
-	});
-};
-
-// Find and Remove by Id
-const removeItemById = (itemId) => {
-	Item.findByIdAndRemove(itemId, (err) => {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log('Item Removed Successfully ', itemId);
-		}
-	});
-};
-
-/////////////////////////////////////////////////////////////////////////
-
-// -------------- Get Home
-app.get('/', (req, res) => {
-	Item.find((err, foundItems) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.render('list', { listTitle: 'Today', newListItem: foundItems });
-		}
-	});
-});
-
-// -------------- Post Home
-app.post('/', (req, res) => {
-	const newItem = req.body.newItem;
-	createItem(newItem);
-
-	res.redirect('/');
-});
-
-app.post('/delete', (req, res) => {
-	const checkedItemId = req.body.checked;
-	removeItemById(checkedItemId);
-
-	res.redirect('/');
-});
-
-/////////////////////////////////////////////////////////////////////////
+// Routes
+app.use('/', require('./routes/appRoute'));
 
 app.listen(port, console.log(`Server started on http://localhost:${port}`));
