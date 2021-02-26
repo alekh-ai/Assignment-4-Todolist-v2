@@ -14,7 +14,7 @@ mongoose
 		useUnifiedTopology: true,
 		useFindAndModify: false,
 	})
-	.then(console.log('Mongoose Connected\n'))
+	.then(console.log('\nMongoose Connected'))
 	.catch((err) => console.error(err));
 
 // Parse request body as JSON
