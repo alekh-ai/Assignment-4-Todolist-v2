@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// const Item = require('../models/ItemModel');
 const ItemController = require('../controllers/ItemController');
 
 // -------------- Get all current List Items
